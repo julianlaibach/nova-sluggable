@@ -24,8 +24,17 @@ export default {
     props: ['resourceName', 'resourceId', 'field'],
 
     methods: {
-        handleChange(event) {
-            Nova.$emit('field-update-' + event.type + '-' + this.slugField, {
+        handleChange(event) {            
+            let lang = this.field.attribute.split('.').length() > 1
+                ? this.field.attribute.split('.').pop()
+                : null
+            let name = this.slugField
+
+            if(lang) {
+                name += '-' + lang
+            }
+
+            Nova.$emit('field-update-' + event.type + '-' + name, {
                 value: event.target.value
             })
         },

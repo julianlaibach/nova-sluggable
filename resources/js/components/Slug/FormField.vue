@@ -37,7 +37,16 @@ export default {
      */
     mounted() {
         const eventType = this.field.options.event || 'keyup';
-        Nova.$on('field-update-' + eventType + '-' + this.field.name, ({value}) => {
+        let lang = this.field.attribute.split('.').length() > 1
+            ? this.field.attribute.split('.').pop()
+            : null
+        let name = this.field.name
+        
+        if(lang) {
+            name += '-' + lang
+        }
+
+        Nova.$on('field-update-' + eventType + '-' + name, ({value}) => {
             this.generateSlug(value)
         })
     },
